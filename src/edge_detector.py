@@ -12,9 +12,11 @@ def main():
     Iy = partial_y(smooth_img)
     grad_mag = np.sqrt(Ix**2 + Iy**2)
     
+    add_figure(img, 'Original image')
     add_figure(smooth_img, 'Smoothed image')
     add_figure(Ix, 'Gradient in X direction')
     add_figure(Iy, 'Gradient in Y direction')
+    add_figure(grad_mag, 'Gradient magnitude map')
     show_figures()
 
 
