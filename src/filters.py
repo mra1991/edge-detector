@@ -1,3 +1,10 @@
+"""
+Image filtering and convolution operations.
+
+This module provides functions for zero padding, 2D filtering, Gaussian
+kernel generation, and computation of horizontal and vertical image
+gradients using the Sobel operator.
+"""
 import numpy as np
 
 def zero_pad(image, pad_height, pad_width):

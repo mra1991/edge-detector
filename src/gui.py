@@ -9,9 +9,11 @@ to:
     4. Display the original image along with all intermediate results.
 """
 
+import numpy as np
 import tkinter as tk
 from tkinter import filedialog
 from pathlib import Path
+from PIL import Image, ImageTk
 
 from image_utils import load_image, add_figure, show_figures
 from edge_detector import detect_edges
@@ -38,7 +40,7 @@ class EdgeDetectorGUI:
         ----------
         root : tkinter.Tk
             The main application window.
-"""
+        """
         self.root = root
         self.root.title("Edge Detector")
 
@@ -53,8 +55,8 @@ class EdgeDetectorGUI:
             label="Kernel size"
         )
         self.kernel_slider.set(5)
-        self.kernel_slider.pack()
-
+        self.kernel_slider.grid(row=0, column=0)
+        
         self.sigma_slider = tk.Scale(
             root,
             from_=0.5,
@@ -64,21 +66,40 @@ class EdgeDetectorGUI:
             label="Sigma"
         )
         self.sigma_slider.set(1.0)
-        self.sigma_slider.pack()
+        self.sigma_slider.grid(row=0, column=1)
 
         self.browse_button = tk.Button(
             root,
             text="Browse Image",
             command=self.browse_image
         )
-        self.browse_button.pack()
+        self.browse_button.grid(row=1, column=0)
 
         self.detect_button = tk.Button(
             root,
             text="Detect Edges",
             command=self.detect_edges_clicked
         )
-        self.detect_button.pack()
+        self.detect_button.grid(row=1, column=1, pady=10)
+        
+        self.image_label = tk.Label(root)
+        self.image_label.grid(row=2, pady=10)
+
+        self.update_image_preview()
+    
+    def update_image_preview(self):
+        preview = self.img
+
+        if preview.max() <= 1.0:
+            preview = preview * 255
+
+        preview = preview.astype(np.uint8)
+
+        pil_image = Image.fromarray(preview)
+        pil_image.thumbnail((500, 400))
+
+        self.tk_image = ImageTk.PhotoImage(pil_image)
+        self.image_label.config(image=self.tk_image)
 
     def browse_image(self):
         """
@@ -98,6 +119,7 @@ class EdgeDetectorGUI:
         )
         if filepath:
             self.img = load_image(filepath)
+            self.update_image_preview()
 
     def detect_edges_clicked(self):
         """
@@ -135,17 +157,16 @@ class EdgeDetectorGUI:
         grad_mag : numpy.ndarray
             Gradient magnitude image.
         """
-        images = [self.img, smooth_img, Ix, Iy, grad_mag]
+        images = [smooth_img, Ix, Iy, grad_mag]
         titles = [
-            "Original image",
             "Smoothed image",
             "Gradient in X direction",
             "Gradient in Y direction",
             "Gradient magnitude map"
         ]
 
-        for image, title in zip(images, titles):
-            add_figure(image, title)
+        for i, (image, title) in enumerate(zip(images, titles), start=1):
+            add_figure(image, i, title)
 
         show_figures()
 

@@ -1,3 +1,10 @@
+"""
+Image loading and visualization utilities.
+
+This module provides helper functions for loading grayscale images,
+creating Matplotlib figures, and displaying one or more images during
+the edge detection process.
+"""
 import matplotlib.pylab as plt
 from skimage import io
 
@@ -13,7 +20,7 @@ def load_image(filepath):
     """
     return io.imread(filepath, as_gray=True)
 
-def add_figure(image, title="Figure"):
+def add_figure(image, plot_counter, title="Figure"):
     """
     Create a new Matplotlib figure and display an image.
 
@@ -21,6 +28,9 @@ def add_figure(image, title="Figure"):
     ----------
     image : numpy.ndarray
         Image to display.
+        
+    plot_counter : int
+        index of sub-plot starting from one.
 
     title : str, optional
         Title displayed above the image.
@@ -29,7 +39,7 @@ def add_figure(image, title="Figure"):
     -------
     None
     """
-    plt.figure()
+    plt.subplot(2, 2, plot_counter)
     plt.title(title)
     plt.imshow(image, cmap='gray')
     plt.axis('off')
@@ -38,5 +48,6 @@ def show_figures():
     """
     Display all previously created Matplotlib figures.
     """
+    plt.tight_layout()
     plt.show()
 

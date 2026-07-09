@@ -1,3 +1,10 @@
+"""
+Core edge detection algorithms.
+
+This module implements the complete edge detection pipeline by applying
+Gaussian smoothing, computing horizontal and vertical Sobel gradients,
+and calculating the gradient magnitude of a grayscale image.
+"""
 import numpy as np
 from filters import gaussian_kernel, filter2d, partial_x, partial_y
 from image_utils import load_image, add_figure, show_figures
