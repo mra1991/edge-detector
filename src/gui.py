@@ -15,7 +15,7 @@ from tkinter import filedialog
 from pathlib import Path
 from PIL import Image, ImageTk
 
-from image_utils import load_image, add_figure, show_figures
+from image_utils import load_image, add_figure, show_figures, init_figures
 from edge_detector import detect_edges
 
 
@@ -164,7 +164,8 @@ class EdgeDetectorGUI:
             "Gradient in Y direction",
             "Gradient magnitude map"
         ]
-
+        
+        init_figures()
         for i, (image, title) in enumerate(zip(images, titles), start=1):
             add_figure(image, i, title)
 

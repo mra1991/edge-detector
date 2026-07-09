@@ -50,4 +50,11 @@ def show_figures():
     """
     plt.tight_layout()
     plt.show()
+    
+def init_figures():
+    """
+    Set the size and caption 
+    """
+    fig = plt.figure(figsize=(8, 6))
+    fig.canvas.manager.set_window_title("Edge Detection Results")
 

@@ -7,7 +7,6 @@ and calculating the gradient magnitude of a grayscale image.
 """
 import numpy as np
 from filters import gaussian_kernel, filter2d, partial_x, partial_y
-from image_utils import load_image, add_figure, show_figures
 
 def detect_edges(image, kernel_size=5, sigma=1.0):
     """
