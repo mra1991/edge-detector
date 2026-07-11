@@ -35,7 +35,7 @@ processing pipeline.
 Install the dependencies with:
 
 ``` bash
-pip install numpy matplotlib scikit-image pillow
+pip install numpy matplotlib scikit-image pillow scipy
 ```
 
 ## Running the Application
